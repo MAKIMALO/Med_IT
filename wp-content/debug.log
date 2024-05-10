@@ -1,1 +1,6 @@
 [10-May-2024 21:39:41 UTC] PHP Warning:  Array to string conversion in D:\MAMP\htdocs\Med_IT\wp-content\themes\oceanwp-child-theme-master\header.php on line 66
+[10-May-2024 21:43:42 UTC] PHP Warning:  Array to string conversion in D:\MAMP\htdocs\Med_IT\wp-content\themes\oceanwp-child-theme-master\header.php on line 66
+[10-May-2024 21:44:50 UTC] PHP Warning:  Array to string conversion in D:\MAMP\htdocs\Med_IT\wp-content\themes\oceanwp-child-theme-master\header.php on line 66
+[10-May-2024 21:45:09 UTC] PHP Warning:  Array to string conversion in D:\MAMP\htdocs\Med_IT\wp-content\themes\oceanwp-child-theme-master\header.php on line 66
+[10-May-2024 21:45:38 UTC] PHP Warning:  Array to string conversion in D:\MAMP\htdocs\Med_IT\wp-content\themes\oceanwp-child-theme-master\header.php on line 66
+[10-May-2024 21:46:43 UTC] Cron unschedule event error for hook: fs_install_sync_oceanwp-theme, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":false,"args":[]}

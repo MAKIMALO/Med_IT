@@ -29,7 +29,15 @@ function oceanwp_child_enqueue_parent_style() {
 }
 add_action( 'wp_enqueue_scripts', 'oceanwp_child_enqueue_parent_style' );
 
+function theme_enqueue_scripts() {
+	// Enqueue jquery script
+	wp_enqueue_script( 'jquery-script', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js', array('jquery'), '1.0', true);
 
+	// Enqueue child theme script
+	wp_enqueue_script( 'child-theme-script', get_stylesheet_directory_uri() . '/scripts/script.js', array('jquery'), '1.2', true );
+
+}
+add_action( 'wp_enqueue_scripts', 'theme_enqueue_scripts' );
 
 
 function contact_btn( $items, $args ) {
