@@ -120,6 +120,7 @@ trait ContentInput {
 			'allowed_html'           => array_keys( $this->get_allowed_html_tags() ),
 			'invalid_elements'       => $this->get_invalid_elements(),
 			'quicktags_buttons'      => $this->get_quicktags_buttons(),
+			'body_class'             => $this->get_editor_body_class(),
 		];
 
 		$strings = $this->add_supported_field_type( $strings, $this->type );
@@ -266,13 +267,13 @@ trait ContentInput {
 	 *
 	 * @noinspection PhpUnusedParameterInspection, PhpUnnecessaryCurlyVarSyntaxInspection
 	 */
-	public function builder_enqueues( $view ) {
+	public function builder_enqueues( $view ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 
 		$min = wpforms_get_min_suffix();
 
 		wp_enqueue_script(
 			'wpforms-content-field',
-			WPFORMS_PLUGIN_URL . "assets/js/components/admin/fields/content-field{$min}.js",
+			WPFORMS_PLUGIN_URL . "assets/pro/js/admin/builder/fields/content{$min}.js",
 			[ 'wpforms-builder', 'editor', 'quicktags' ],
 			WPFORMS_VERSION,
 			true
@@ -454,6 +455,7 @@ trait ContentInput {
 				'relative_urls'          => false,
 				'remove_script_host'     => false,
 				'object_resizing'        => false,
+				'body_class'             => $this->get_editor_body_class(),
 			],
 			'quicktags'        => [
 				'buttons' => $this->get_quicktags_buttons(),
@@ -562,5 +564,17 @@ trait ContentInput {
 		 * @param array $allowed_tags Allowed tags.
 		 */
 		return (array) apply_filters( 'wpforms_builder_content_input_get_allowed_html_tags', wpforms_get_allowed_html_tags_for_richtext_field() );
+	}
+
+	/**
+	 * Get editor body class.
+	 *
+	 * @since 1.7.9
+	 *
+	 * @return string
+	 */
+	private function get_editor_body_class() {
+
+		return 'wpforms-content-field-editor-body';
 	}
 }

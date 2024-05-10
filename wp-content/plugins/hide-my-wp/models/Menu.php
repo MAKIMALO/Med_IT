@@ -118,7 +118,7 @@ class HMWP_Models_Menu
         }
 
         //Return the menu array
-        return $menu;
+        return apply_filters('hmwp_menu', $menu);
     }
 
     /**
@@ -129,6 +129,8 @@ class HMWP_Models_Menu
      */
     public function getSubMenu($current)
     {
+        $submenu = array();
+
         $subtabs = array(
             'hmwp_permalinks' => array(
                 array(
@@ -235,7 +237,7 @@ class HMWP_Models_Menu
             ),
             'hmwp_advanced' => array(
                 array(
-                    'title' => esc_html__("Safe URL", 'hide-my-wp'),
+                    'title' => esc_html__("Rollback Settings", 'hide-my-wp'),
                     'tab' =>'rollback',
                 ),
                 array(
@@ -263,10 +265,10 @@ class HMWP_Models_Menu
 
         //Return all submenus
         if(isset($subtabs[$current])) {
-            return  $subtabs[$current];
+            $submenu =  $subtabs[$current];
         }
 
-        return array();
+        return apply_filters('hmwp_submenu', $submenu);
     }
 
     /**
@@ -383,7 +385,7 @@ class HMWP_Models_Menu
             'font-awesome', 'bootstrap-iconpicker-iconset', 'bootstrap-iconpicker',
             'cs_admin_styles_css', 'jobcareer_admin_styles_css','jobcareer_editor_style', 'jobcareer_bootstrap_min_js', 'cs_fonticonpicker_bootstrap_css',
             'cs_bootstrap_slider_css', 'cs_bootstrap_css', 'cs_bootstrap_slider', 'cs_bootstrap_min_js', 'cs_bootstrap_slider_js', 'bootstrap',
-            'wp-reset', 'buy-me-a-coffee'
+            'wp-reset', 'buy-me-a-coffee', 'mylisting-admin-general'
         );
 
         //Exclude the styles and scripts that affects the plugin functionality

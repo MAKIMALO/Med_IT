@@ -96,13 +96,13 @@ if (HMWP_Classes_Tools::getOption('hmwp_security_alert')) {
                                             <strong><?php echo esc_html__('Last check:', 'hide-my-wp'); ?></strong> <?php echo date(get_option('date_format') . ' ' . get_option('time_format'), ($view->securitycheck_time['timestamp'] + (get_option('gmt_offset') * HOUR_IN_SECONDS))); ?>
                                         </div>
 									<?php } ?>
-                                    <div class="text-center small mt-4 border-top pt-2"><?php echo sprintf(esc_html__("According to %sGoogle latest stats%s, over %s 30k websites are hacked every day %s and %s over 30&#37; of them are made in WordPress %s. %s It's better to prevent an attack than to spend a lot of money and time to recover your data after an attack not to mention the situation when your clients' data are stollen.", 'hide-my-wp'), '<a href="https://transparencyreport.google.com/safe-browsing/overview" target="_blank"><strong>', '</strong></a>', '<strong>', '</strong>', '<strong>', '</strong>', '<br />') ?></div>
+                                    <div class="text-center small mt-4 border-top pt-2"><?php echo sprintf(esc_html__("According to %sGoogle latest stats%s, over %s 30k websites are hacked every day %s and %s over 30&#37; of them are made in WordPress %s. %s It's better to prevent an attack than to spend a lot of money and time to recover your data after an attack not to mention the situation when your clients' data are stolen.", 'hide-my-wp'), '<a href="https://transparencyreport.google.com/safe-browsing/overview" target="_blank"><strong>', '</strong></a>', '<strong>', '</strong>', '<strong>', '</strong>', '<br />') ?></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 mt-3 p-0 input-group">
 							<?php   if (!empty($view->report)) { ?>
-                                <table class="table table-striped table_securitycheck" style="width: 100%">
+                                <table class="table table_securitycheck" style="width: 100%">
                                     <thead>
                                     <tr>
                                         <th scope="col"><?php echo esc_html__('Name', 'hide-my-wp') ?></th>
@@ -113,7 +113,7 @@ if (HMWP_Classes_Tools::getOption('hmwp_security_alert')) {
                                     </thead>
                                     <tbody>
 									<?php  foreach ($view->report as $index => $row) {  ?>
-                                        <tr>
+                                        <tr class="<?php echo ($row['valid'] ? 'task_passed' : 'task_failed') ?>" style="<?php echo ($row['valid'] ? 'display:none' : '') ?>">
                                             <td style="width: 30%; word-break: break-word;"><?php echo wp_kses_post($row['name']) ?></td>
                                             <td style="width: 20%; font-weight: bold; word-break: break-word;"><?php echo wp_kses_post($row['value']) ?></td>
                                             <td style="width: 30%; word-break: break-word;" class="<?php echo ($row['valid'] ? 'text-success' : 'text-danger') ?>"><?php echo ($row['valid'] ? '<i class="dashicons dashicons-yes mr-2" style="font-size: 1.6rem !important;"></i>' : '<i class="dashicons dashicons-no mr-2"  style="font-size: 1.6rem !important;"></i>' . (isset($row['solution']) ? wp_kses_post($row['solution']) : '')) ?></td>
@@ -160,7 +160,11 @@ if (HMWP_Classes_Tools::getOption('hmwp_security_alert')) {
 								<?php wp_nonce_field('hmwp_resetexclude', 'hmwp_nonce') ?>
                                 <input type="hidden" name="action" value="hmwp_resetexclude"/>
 
-                                <button type="submit" class="btn btn-light"><?php echo esc_html__('Show all ignored tasks', 'hide-my-wp') ?></button>
+                                <button type="button" class="btn btn-light show_task_passed"><?php echo esc_html__('Show completed tasks', 'hide-my-wp') ?></button>
+                                <button type="button" class="btn btn-light hide_task_passed" style="display: none"><?php echo esc_html__('Hide completed tasks', 'hide-my-wp') ?></button>
+                                <?php if (get_option(HMWP_SECURITY_CHECK_IGNORE) ) { ?>
+                                    <button type="submit" class="btn btn-light"><?php echo esc_html__('Show ignored tasks', 'hide-my-wp') ?></button>
+                                <?php }?>
                             </form>
                         </div>
                     </div>

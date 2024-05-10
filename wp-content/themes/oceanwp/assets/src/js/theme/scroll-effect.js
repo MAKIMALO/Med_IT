@@ -28,11 +28,26 @@ class ScrollEffect {
   #setupEventListeners = () => {
     document
       .querySelectorAll(
-        'a[href*="#"]:not([href="#"]):not(.comment-navigation .nav-links a), a.local[href*="#"]:not([href="#"]), .local a[href*="#"]:not([href="#"]), a.menu-link[href*="#"]:not([href="#"]), a.sidr-class-menu-link[href*="#"]:not([href="#"])'
+        'a[href*="#"]:not([href="#"]), a.local[href*="#"]:not([href="#"]), .local a[href*="#"]:not([href="#"]), a.menu-link[href*="#"]:not([href="#"])'
       )
       .forEach((scrollItem) => {
         scrollItem.addEventListener("click", this.#onScrollItemClick);
       });
+
+    document.addEventListener('sectionLoaded', () => {
+        // Close the full-screen menu
+        if (window.oceanwp.fullScreenMobileMenu) {
+          window.oceanwp.fullScreenMobileMenu.closeMainMenu();
+        }
+
+        if (window.oceanwp.sidebarMobileMenu) {
+          window.oceanwp.sidebarMobileMenu.closeSidr();
+        }
+
+        if (window.oceanwp.dropDownMobileMenu) {
+          window.oceanwp.dropDownMobileMenu.onMenuCloseClick();
+        }
+    });
   };
 
 
@@ -40,29 +55,12 @@ class ScrollEffect {
     const scrollItem = event.currentTarget;
 
     if (
-      scrollItem.classList.contains("elementor-item-anchor") &&
-      scrollItem.classList.contains("has-submenu")
-    ) {
-      return;
-    }
-
-    if (
       !scrollItem.classList.contains("omw-open-modal") &&
       !scrollItem.closest(".omw-open-modal") &&
       !scrollItem.classList.contains("oew-modal-button") &&
       !scrollItem.closest(".oew-modal-button") &&
       !scrollItem.classList.contains("opl-link") &&
-      !scrollItem.parentNode.classList.contains("opl-link") &&
-      !scrollItem.classList.contains("sidr-class-opl-link") &&
-      !scrollItem.parentNode.classList.contains("sidr-class-opl-link") &&
-      !scrollItem.classList.contains("comment-reply") &&
-      !scrollItem.classList.contains("htb-nav-link") &&
-      !scrollItem.classList.contains("upload-file") &&
-      !scrollItem.parentNode.classList.contains("vc_tta-panel-title") &&
-      !scrollItem.classList.contains("vce-tabs-with-slide-tab-title") &&
-      !scrollItem.classList.contains("vce-tabs-with-slide-panel-title") &&
-      !scrollItem.classList.contains("vce-classic-tabs-tab-title") &&
-      !scrollItem.classList.contains("vce-classic-accordion-panel-title")
+      !scrollItem.parentNode.classList.contains("opl-link")
     ) {
       const href = scrollItem.getAttribute("href");
       const id = href.substring(href.indexOf("#")).slice(1);
@@ -78,9 +76,12 @@ class ScrollEffect {
 
         let scrollPosition =
           offset(targetElem).top -
+          this.#getCustomOffsetValue() -
           this.#getAdminBarHeight() -
           this.#getTopbarHeight() -
           this.#getStickyHeaderHeight();
+
+          console.log(scrollPosition);
 
         this.#elements.html.scrollTo({
           top: scrollPosition,
@@ -90,8 +91,21 @@ class ScrollEffect {
     }
   };
 
-  #getAdminBarHeight = () =>
-    !!this.#elements.WPAdminbar ? this.#elements.WPAdminbar.offsetHeight : 0;
+  #getCustomOffsetValue = () =>
+  !!oceanwpLocalize.customScrollOffset ? oceanwpLocalize.customScrollOffset : 0;
+
+  #getAdminBarHeight = () => {
+    // Check if the window width is less than 600px
+    // const isMobile = window.innerWidth < 600;
+
+    // // If it's mobile, return 0
+    // if (isMobile) {
+    //   return 0;
+    // }
+
+    // If not mobile, proceed with the original logic to get the admin bar height
+    return !!this.#elements.WPAdminbar ? this.#elements.WPAdminbar.offsetHeight : 0;
+  };
 
   #getTopbarHeight = () =>
     !!this.#elements.topbarWrapper &&
