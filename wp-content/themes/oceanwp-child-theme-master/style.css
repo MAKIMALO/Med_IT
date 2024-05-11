@@ -15,6 +15,7 @@ Version: 1.0
     display:inline-block;
     background-color:white;
     padding:6px 16px;
+    margin-left: 20px;
     border-radius:6px;
 }
 .popup-overlay{
@@ -101,4 +102,25 @@ Version: 1.0
     margin-top:20px;
     margin-bottom:10px;
     border-bottom: 1px solid #28babf;
+}
+
+
+/* Modifications apportées sur le menu */
+#menu-main-menu {
+    display: flex;
+    align-items: center;
+    width: 750px;
+}
+
+#footer-bottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#footer-bottom #footer-bottom-menu ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 700px;
 }
