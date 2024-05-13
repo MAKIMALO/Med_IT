@@ -89,7 +89,7 @@ lignes de code incluses dans script.js -->
 /**
  * Shortcode pour ajouter un bouton
  */
-function contact__shortcode_btn() {
+function contact_shortcode_btn() {
 
 	// Code du bouton
 	$string .= '<a href="/contact" class="contact-btn">Nous contacter</a>';
